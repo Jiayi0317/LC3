@@ -1,8 +1,7 @@
 
         .ORIG x3000
 
-; ==========================================
-; Lab2: In-place Matrix Transpose
+;基础说明以及对定义
 ; Matrix dimension: x30FF
 ; Matrix base address: x3100
 ; Dimension range: 2 <= i <= 8
@@ -15,9 +14,8 @@
 ; R5: Outer loop counter r外部循环
 ; R6: Current row base address
 ; R7: Temporary register / A[c][r] value
-; ==========================================
 
-; ---------- Initialization ----------
+; Initialization 
 
         LD  R4, SIZE_PTR    ;R4找到地址
         LDR R4, R4, #0       ; R4 = i
@@ -27,7 +25,7 @@
         AND R5, R5, #0       ; R5 = r = 0
 
 
-; ---------- Outer Loop ----------
+; 外部循环
 
 OUTER
 
@@ -56,7 +54,7 @@ OUTER
         ADD R1, R6, R4   
         ADD R1, R1, R5          
 
-; ---------- Inner Loop ----------
+; 内部循环
 
 INNER
 
@@ -84,7 +82,7 @@ INNER
         BRp INNER       ;正数继续循环
 
 
-; ---------- Update Outer Loop(内部已循环完毕)----------
+; 内部已循环完毕
 
         ; Move to next row
         ADD R6, R6, R4
@@ -95,13 +93,15 @@ INNER
         BRnzp OUTER
 
 
-; ---------- End ----------
+
+
+;End 
 
 DONE
         TRAP x25
 
 
-; ---------- Constants ----------
+;address
 
 SIZE_PTR    .FILL x30FF
 MATRIX_PTR  .FILL x3100
